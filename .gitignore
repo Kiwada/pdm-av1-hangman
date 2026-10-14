@@ -1,0 +1,29 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildpath
+.cache/
+.classpath
+.project
+.settings/
+.springBeans
+.factorypath
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .dart_tool directory is created by the build system and stores plugin data
+.dart_tool/
+
+# The build directory stores build artifacts
+build/
+
+# Coverage
+coverage/
