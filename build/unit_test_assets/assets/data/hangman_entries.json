@@ -1,0 +1,16 @@
+{
+  "entries": [
+    {"answer": "COLUNA VERTEBRAL", "category": "humanBody", "difficulty": "medium", "hints": ["Estrutura óssea que sustenta o tronco e protege parte do sistema nervoso."]},
+    {"answer": "CORAÇÃO", "category": "humanBody", "difficulty": "easy", "hints": ["Órgão que bombeia o sangue pelo corpo."]},
+    {"answer": "PÂNCREAS", "category": "humanBody", "difficulty": "hard", "hints": ["Glândula que produz insulina."]},
+    {"answer": "SISTEMA OPERACIONAL", "category": "technology", "difficulty": "medium", "hints": ["Software responsável por gerenciar recursos do computador e oferecer serviços a outros programas."]},
+    {"answer": "COMPUTADOR", "category": "technology", "difficulty": "easy", "hints": ["Máquina que executa programas."]},
+    {"answer": "CHAT-BOT", "category": "technology", "difficulty": "hard", "hints": ["Programa que conversa com pessoas por texto."]},
+    {"answer": "QUATI SUL-AMERICANO", "category": "animals", "difficulty": "hard", "hints": ["Mamífero de focinho alongado e cauda anelada."]},
+    {"answer": "GATO", "category": "animals", "difficulty": "easy", "hints": ["Felino doméstico que mia."]},
+    {"answer": "LOBO-GUARÁ", "category": "animals", "difficulty": "medium", "hints": ["Maior canídeo da América do Sul."]},
+    {"answer": "FUTEBOL", "category": "sports", "difficulty": "easy", "hints": ["Esporte com onze jogadores por time e uma bola."]},
+    {"answer": "TÊNIS DE MESA", "category": "sports", "difficulty": "medium", "hints": ["Esporte jogado com raquetes pequenas e uma bolinha leve."]},
+    {"answer": "SALTO COM VARA", "category": "sports", "difficulty": "hard", "hints": ["Modalidade do atletismo em que se ultrapassa uma barra usando um bastão flexível."]}
+  ]
+}
