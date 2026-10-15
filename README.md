@@ -1,9 +1,7 @@
 # Integrantes
 
-- Nome completo do integrante 1
-- Nome completo do integrante 2
-- Nome completo do integrante 3
-- Nome completo do integrante 4
+- Kaio Felipe Castro Fontenele
+- Lucas Feitosa de Andrade
 
 ---
 
