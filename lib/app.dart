@@ -3,6 +3,7 @@ import 'package:hangman_game/application/game_controller.dart';
 import 'package:hangman_game/data/asset_answer_repository.dart';
 import 'package:hangman_game/domain/repositories/answer_repository.dart';
 import 'package:hangman_game/presentation/screens/setup_screen.dart';
+import 'package:hangman_game/core/theme/app_theme.dart';
 
 /// Raiz da aplicação: cria o controlador e carrega o JSON dos assets.
 class HangmanApp extends StatefulWidget {
@@ -33,23 +34,15 @@ class _HangmanAppState extends State<HangmanApp> {
     super.dispose();
   }
 
-  ThemeData _buildTheme(Brightness brightness) {
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.indigo,
-        brightness: brightness,
-      ),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Jogo da Forca',
       debugShowCheckedModeBanner: false,
-      theme: _buildTheme(Brightness.light),
-      darkTheme: _buildTheme(Brightness.dark),
+      theme: AppTheme.dark,
+      darkTheme: AppTheme.dark,
       home: _HomeGate(controller: _controller),
     );
   }

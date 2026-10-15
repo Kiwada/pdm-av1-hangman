@@ -19,3 +19,14 @@ flutter:
   uses-material-design: true
   assets:
     - assets/data/hangman_entries.json
+
+  fonts:
+    - family: PressStart2P
+      fonts:
+        - asset: assets/fonts/pressstart2p-regular.ttf
+
+    - family: IBMPlexMono
+      fonts:
+        - asset: assets/fonts/IBMPlexMono-Regular.ttf
+        - asset: assets/fonts/IBMPlexMono-Bold.ttf
+          weight: 700
