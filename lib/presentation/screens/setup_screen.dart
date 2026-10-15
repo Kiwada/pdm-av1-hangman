@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:hangman_game/application/game_controller.dart';
+import 'package:hangman_game/core/theme/app_colors.dart';
 import 'package:hangman_game/domain/enums/answer_category.dart';
 import 'package:hangman_game/domain/enums/difficulty.dart';
 import 'package:hangman_game/presentation/screens/about_screen.dart';
@@ -50,10 +52,18 @@ class _SetupScreenState extends State<SetupScreen> {
       builder: (context, _) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Jogo da Forca'),
+            title: const Text(
+              'JOGO DA FORCA',
+              style: TextStyle(
+                fontFamily: 'PressStart2P',
+                fontSize: 12,
+                color: AppColors.text,
+              ),
+            ),
             actions: [
               IconButton(
                 icon: const Icon(Icons.bar_chart),
+                color: AppColors.primary,
                 tooltip: 'Estatísticas',
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute<void>(
@@ -63,6 +73,7 @@ class _SetupScreenState extends State<SetupScreen> {
               ),
               IconButton(
                 icon: const Icon(Icons.info_outline),
+                color: AppColors.primary,
                 tooltip: 'Sobre',
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute<void>(
@@ -79,58 +90,76 @@ class _SetupScreenState extends State<SetupScreen> {
                 child: ListView(
                   padding: const EdgeInsets.all(16),
                   children: [
-                    Text('Nova rodada', style: textTheme.headlineSmall),
+                    Text('Nova rodada', style: textTheme.titleLarge),
                     const SizedBox(height: 24),
-                    Text('Categoria', style: textTheme.titleMedium),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: [
-                        for (final category in controller.availableCategories)
-                          ChoiceChip(
-                            label: Text(category.label),
-                            selected: _category == category,
-                            onSelected: (_) =>
-                                setState(() => _category = category),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppColors.surface,
+                        border: Border.all(color: AppColors.border),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text('Categoria', style: textTheme.titleMedium),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              for (final category
+                                  in controller.availableCategories)
+                                ChoiceChip(
+                                  label: Text(category.label),
+                                  selected: _category == category,
+                                  onSelected: (_) =>
+                                      setState(() => _category = category),
+                                ),
+                            ],
                           ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-                    Text('Nível de dificuldade', style: textTheme.titleMedium),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: [
-                        for (final difficulty
-                            in controller.availableDifficulties)
-                          ChoiceChip(
-                            label: Text(difficulty.label),
-                            selected: _difficulty == difficulty,
-                            onSelected:
-                                _category != null &&
-                                    controller.totalCount(
-                                          _category!,
-                                          difficulty,
-                                        ) ==
-                                        0
-                                ? null
-                                : (_) => setState(() => _difficulty = difficulty),
+                          const SizedBox(height: 24),
+                          Text(
+                            'Nível de dificuldade',
+                            style: textTheme.titleMedium,
                           ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-                    _SelectionSummary(
-                      controller: controller,
-                      category: _category,
-                      difficulty: _difficulty,
-                    ),
-                    const SizedBox(height: 16),
-                    FilledButton.icon(
-                      onPressed: _canStart ? _startRound : null,
-                      icon: const Icon(Icons.play_arrow),
-                      label: const Text('Iniciar rodada'),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              for (final difficulty
+                                  in controller.availableDifficulties)
+                                ChoiceChip(
+                                  label: Text(difficulty.label),
+                                  selected: _difficulty == difficulty,
+                                  onSelected:
+                                      _category != null &&
+                                          controller.totalCount(
+                                                _category!,
+                                                difficulty,
+                                              ) ==
+                                              0
+                                      ? null
+                                      : (_) => setState(
+                                          () => _difficulty = difficulty,
+                                        ),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          _SelectionSummary(
+                            controller: controller,
+                            category: _category,
+                            difficulty: _difficulty,
+                          ),
+                          const SizedBox(height: 16),
+                          FilledButton.icon(
+                            onPressed: _canStart ? _startRound : null,
+                            icon: const Icon(Icons.play_arrow, size: 18),
+                            label: const Text('INICIAR RODADA'),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -161,14 +190,18 @@ class _SelectionSummary extends StatelessWidget {
     final hasBoth = category != null && difficulty != null;
 
     return Card(
+      margin: EdgeInsets.zero,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Opções selecionadas',
-              style: Theme.of(context).textTheme.titleSmall,
+              'OPÇÕES SELECIONADAS',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: AppColors.primary,
+                fontSize: 11,
+              ),
             ),
             const SizedBox(height: 8),
             Text('Categoria: ${category?.label ?? 'não selecionada'}'),
@@ -178,6 +211,10 @@ class _SelectionSummary extends StatelessWidget {
                 'Respostas disponíveis: '
                 '${controller.remainingCount(category, difficulty)} de '
                 '${controller.totalCount(category, difficulty)}',
+                style: const TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
           ],
         ),

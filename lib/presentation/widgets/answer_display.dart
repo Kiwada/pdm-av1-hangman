@@ -1,21 +1,22 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:hangman_game/core/theme/app_colors.dart';
 import 'package:hangman_game/domain/models/answer_character.dart';
 import 'package:hangman_game/domain/models/hangman_round.dart';
 
 /// Resposta parcialmente revelada, com as palavras visualmente separadas.
 ///
-/// Letras ocultas aparecem como sublinhado; espaços separam as palavras e
-/// hífens/pontuação aparecem desde o início, sem ação do jogador.
+/// Letras ocultas aparecem em células com sublinhado; espaços separam as
+/// palavras e hífens/pontuação aparecem desde o início.
 class AnswerDisplay extends StatelessWidget {
   const AnswerDisplay({super.key, required this.round});
 
   final HangmanRound round;
 
-  static const double _spacing = 4;
-  static const double _minCell = 22;
-  static const double _maxCell = 38;
+  static const double _spacing = 7;
+  static const double _minCell = 38;
+  static const double _maxCell = 55;
 
   String get _semanticsLabel {
     final parts = round.entry.characters.map((c) {
@@ -43,13 +44,13 @@ class AnswerDisplay extends StatelessWidget {
           excludeSemantics: true,
           child: Wrap(
             alignment: WrapAlignment.center,
-            spacing: cellWidth * 0.9,
-            runSpacing: 14,
+            spacing: cellWidth * 0.35,
+            runSpacing: 10,
             children: [
               for (final word in words)
                 Wrap(
                   spacing: _spacing,
-                  runSpacing: 6,
+                  runSpacing: 10,
                   children: [
                     for (final character in word)
                       _CharacterCell(
@@ -80,10 +81,10 @@ class _CharacterCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final height = width * 1.3;
+    final height = width;
+    final revealed = round.isRevealed(character);
+    final missed = round.isMissed(character);
 
-    // Hífens e demais símbolos: exibidos automaticamente, sem sublinhado.
     if (!character.isLetter) {
       return SizedBox(
         width: width * 0.6,
@@ -92,42 +93,67 @@ class _CharacterCell extends StatelessWidget {
           child: Text(
             character.display,
             style: TextStyle(
-              fontSize: width * 0.7,
-              fontWeight: FontWeight.bold,
-              color: scheme.onSurfaceVariant,
+              color: AppColors.text,
+              fontFamily: 'PressStart2P',
+              fontSize: width * 0.4,
             ),
           ),
         ),
       );
     }
 
-    final revealed = round.isRevealed(character);
-    final missed = round.isMissed(character);
-    return Container(
+    final backgroundColor = missed
+        ? AppColors.wrongSurface
+        : revealed
+        ? AppColors.primaryDark
+        : AppColors.surface;
+
+    final borderColor = missed
+        ? AppColors.error
+        : revealed
+        ? AppColors.primary
+        : AppColors.border;
+
+    final foregroundColor = missed
+        ? AppColors.error
+        : revealed
+        ? AppColors.primary
+        : AppColors.muted;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
       width: width,
       height: height,
-      alignment: Alignment.center,
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: missed ? scheme.error : scheme.onSurface,
-            width: 3,
-          ),
-        ),
+        color: backgroundColor,
+        border: Border.all(color: borderColor),
       ),
-      child: revealed
-          ? FittedBox(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          if (revealed)
+            FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
                 character.display,
                 style: TextStyle(
-                  fontSize: width * 0.8,
-                  fontWeight: FontWeight.bold,
-                  color: missed ? scheme.error : scheme.onSurface,
+                  color: foregroundColor,
+                  fontFamily: 'PressStart2P',
+                  fontSize: width * 0.36,
                 ),
               ),
-            )
-          : null,
+            ),
+          Positioned(
+            bottom: 6,
+            left: 7,
+            right: 7,
+            child: Container(
+              height: 2,
+              color: foregroundColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
